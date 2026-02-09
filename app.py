@@ -131,6 +131,12 @@ def year_stats():
         counts[y] = counts.get(y, 0) + 1
     return jsonify(counts)
 
+# -------------------------
+# Health check endpoint
+# -------------------------
+@app.route("/healthz")
+def health():
+    return {"status": "ok"}
 
 # -------------------------
 # Run the app
