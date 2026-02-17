@@ -1,7 +1,8 @@
 openapi: 3.0.0
+
 info:
   title: API Playground
-  version: "1.0.0"
+  version: "1.1.0"
   description: >
     Public API used in Week 7 to explore URLs, HTTP,
     REST APIs, and client-server interaction.
@@ -10,12 +11,16 @@ servers:
   - url: https://api-swagger-playground.onrender.com/
 
 paths:
+
   /users:
+
     get:
       summary: Get all users
       responses:
         "200":
-          description: OK
+          description: A list of users
+
+
     post:
       summary: Create a user
       requestBody:
@@ -24,25 +29,155 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, email, age, year]
+              required:
+                - name
+                - email
+                - age
+                - year
               properties:
-                name: { type: string }
-                email: { type: string }
-                age: { type: integer }
-                year: { type: integer }
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+                year:
+                  type: integer
       responses:
         "201":
-          description: Created
+          description: User created
+
+
+
+  /users/batch:
+
+    post:
+      summary: Batch add users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - name
+                  - email
+                  - age
+                  - year
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  age:
+                    type: integer
+                  year:
+                    type: integer
+      responses:
+        "201":
+          description: Users created
+
+
+
+  /users/{user_id}:
+
+    patch:
+      summary: Update user partially
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+                year:
+                  type: integer
+
+      responses:
+        "200":
+          description: User updated
+
+        "404":
+          description: User not found
+
+
+
+    delete:
+      summary: Delete user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: User deleted
+
+        "404":
+          description: User not found
+
+
+
 
   /users/year/{year}:
+
     get:
       summary: Get users by year
+
       parameters:
         - name: year
           in: path
           required: true
           schema:
             type: integer
+
       responses:
         "200":
-          description: OK
+          description: Filtered list of users
+
+
+
+  /stats/age:
+
+    get:
+      summary: Get age list
+      responses:
+        "200":
+          description: List of ages
+
+
+
+  /stats/year:
+
+    get:
+      summary: Get user count by year
+      responses:
+        "200":
+          description: Year counts
+
+
+
+  /healthz:
+
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: API is healthy
