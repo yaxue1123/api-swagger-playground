@@ -255,6 +255,27 @@ def year_stats():
 
     return jsonify(counts)
 
+# -------------------------
+# DELETE all users
+# -------------------------
+@app.route("/users", methods=["DELETE"])
+def delete_all_users():
+    """
+    Delete all users
+    ---
+    responses:
+      200:
+        description: All users deleted successfully
+    """
+
+    count = len(data.users)
+
+    data.users.clear()
+
+    return jsonify({
+        "message": "All users deleted",
+        "deleted_count": count
+    })
 
 # -------------------------
 # Health check
