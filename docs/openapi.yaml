@@ -3,9 +3,22 @@ openapi: 3.0.0
 info:
   title: API Playground
   version: "1.1.0"
-  description: >
+  description: |
     Public API used in Week 7 to explore URLs, HTTP,
     REST APIs, and client-server interaction.
+
+    ---
+
+    ### ⚠ Important Notes
+
+    **Render Auto-Sleep**
+    - The service spins down after ~15 minutes of inactivity.
+    - It automatically wakes up on the first request.
+
+    **Data Persistence**
+    - Data is stored in `data.py` (in-memory).
+    - No database is used.
+    - Data will reset when the service restarts.
 
 servers:
   - url: https://api-swagger-playground.onrender.com/
